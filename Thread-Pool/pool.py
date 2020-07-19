@@ -1,5 +1,5 @@
 from queue import ThreadSafeQueue
-from task import Task
+from task import Task, AsyncTask
 
 import threading
 
@@ -26,6 +26,8 @@ class ProcessThread(threading.Thread):
                 continue
             # 执行task实际逻辑
             result = task.callable(*task.args, **task.kwargs)
+            if isinstance(task, AsyncTask):
+                task.set_result(result)
 
     def dismiss(self):
         self.dismiss_flag.set()
