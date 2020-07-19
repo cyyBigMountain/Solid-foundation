@@ -25,7 +25,7 @@ class ThreadSafeQueue(object):
     # 往队列里面放入元素
     def put(self, item):
         if self.max_size != 0 and self.size() > self.max_size:
-            return ThreadSafeQueueException()
+            raise ThreadSafeQueueException()
         self.lock.acquire()
         self.queue.append(item)
         self.lock.release()
